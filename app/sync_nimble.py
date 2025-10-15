@@ -3,7 +3,7 @@ import requests
 import psycopg2
 from contextlib import contextmanager
 
-API_URL = "https://api.nimble.com/api/v1/contacts"
+API_URL = "https://app.nimble.com/api/v1/contacts"
 API_TOKEN = os.getenv("NIMBLE_TOKEN", "NxkA2RlX3SNiR8SKwRdDmroA992jgu")
 
 DB_SETTINGS = {
