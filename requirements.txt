@@ -5,7 +5,7 @@ fastapi==0.119.0
 h11==0.16.0
 httptools==0.7.1
 idna==3.11
-psycopg[binary]==3.2.10
+psycopg2-binary==2.9.9
 pydantic==2.12.2
 pydantic_core==2.41.4
 python-dotenv==1.1.1
@@ -18,3 +18,4 @@ uvicorn==0.37.0
 uvloop==0.21.0
 watchfiles==1.1.1
 websockets==15.0.1
+requests==2.32.3
