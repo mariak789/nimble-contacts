@@ -1,7 +1,12 @@
-import os
+import os, requests
+from dotenv import load_dotenv
 import requests
 import psycopg2
 from contextlib import contextmanager
+
+load_dotenv()
+
+API_TOKEN = os.getenv("NIMBLE_TOKEN")
 
 API_URL = "https://app.nimble.com/api/v1/contacts"
 API_TOKEN = os.getenv("NIMBLE_TOKEN", "NxkA2RlX3SNiR8SKwRdDmroA992jgu")
@@ -37,7 +42,7 @@ def fetch_contacts():
     }
     params = {
         "per_page": 200,
-        "fields": "first%20name,last%20name,email,description",
+        "fields": "first name,last name,email,description",
         "page": 1,
     }
     results = []
