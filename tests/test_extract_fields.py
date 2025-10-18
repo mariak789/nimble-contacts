@@ -1,4 +1,3 @@
-# tests/test_extract_fields.py
 from app.sync_nimble import extract_fields
 
 def test_extract_fields_handles_arrays_and_missing_values():

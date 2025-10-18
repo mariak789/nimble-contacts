@@ -1,4 +1,3 @@
-# tests/conftest.py
 import pytest
 from app.db import get_conn
 
@@ -6,7 +5,6 @@ from app.db import get_conn
 def _clean_contacts():
     """Перед кожним тестом чистимо таблицю та наповнюємо фікстурами."""
     with get_conn() as conn, conn.cursor() as cur:
-        # Гарантуємо наявність таблиці (на випадок чистого середовища)
         cur.execute("""
         CREATE TABLE IF NOT EXISTS contacts(
             id SERIAL PRIMARY KEY,
@@ -17,7 +15,6 @@ def _clean_contacts():
             updated_at TIMESTAMPTZ DEFAULT now()
         );
         """)
-        # Стовпець search_tsv як з вашого init-скрипта
         cur.execute("""
         DO $$
         BEGIN

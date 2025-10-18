@@ -30,7 +30,6 @@ def _first_value(seq):
     return None
 
 def _nz(s):
-    """Обрізає пробіли і повертає None для пустих рядків."""
     s = (s or "").strip()
     return s if s else None
 
@@ -51,7 +50,6 @@ def fetch_contacts():
         "Accept": "application/json",
         "User-Agent": "nimble-sync-test/1.0",
     }
-    # увага: fields як звичайний рядок, без ручного %-encoding
     params = {
         "per_page": 200,
         "fields": "first name,last name,email,description",
@@ -65,18 +63,15 @@ def fetch_contacts():
         if r.status_code == 401:
             raise SystemExit(f"Unauthorized (401). Check NIMBLE_TOKEN. Body: {r.text[:200]}")
         if r.status_code == 409:
-            # зазвичай це подвійне кодування полів у query
             raise SystemExit(f"409 Conflict. URL={r.url} Body={r.text[:200]}")
         r.raise_for_status()
 
         data = r.json()
 
-        # ---- resources: або list, або dict ----
         resources = data.get("resources")
         if isinstance(resources, list):
             items = resources
         elif isinstance(resources, dict):
-            # деякі відповіді загортають список під ключ 'contacts'
             items = resources.get("contacts")
             if not isinstance(items, list):
                 items = list(resources.values())
@@ -85,7 +80,7 @@ def fetch_contacts():
 
         results.extend(items)
 
-        # ---- pagination/meta ----
+        # pagination/meta
         meta = data.get("meta") or data.get("pagination") or {}
         page  = meta.get("page") or meta.get("current_page") or params["page"]
         pages = meta.get("pages") or meta.get("total_pages") or 1
