@@ -20,12 +20,12 @@ A FastAPI microservice for importing, syncing, and searching contacts stored in 
 ### Environment Setup 
 1. Create a .env file:
 
-POSTGRES_DB=contacts
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_HOST=db
-POSTGRES_PORT=5432
-NIMBLE_TOKEN=your_api_token_here
+- POSTGRES_DB=contacts
+- POSTGRES_USER=postgres
+- POSTGRES_PASSWORD=postgres
+- POSTGRES_HOST=db
+- POSTGRES_PORT=5432
+- NIMBLE_TOKEN=your_api_token_here
 
 2. Build and start containers:
 ```bash
@@ -70,13 +70,31 @@ curl "http://localhost:8010/health"
 curl "http://localhost:8010/search?q=nimble.com&limit=5"
 ```
 
+---
+
 ## Tests
 
 Run all tests:
 ```bash
 docker compose exec api pytest -q
 ```
-Includes:
-- TestClient API tests
-- Direct SQL query tests
-- Automatic DB seeding via conftest.py
+Tests atre included under the tests/ directory.
+They cover the followinf parts of the system: 
+
+✅ test_extract_fields.py 
+Verifies the Nimble API field extraction logic:
+- handles arrays and missing values gracefully
+- returns (None) when fields are empty
+- ensures correct parsing of 'first name', 'last name', 'email', and 'description'.
+
+✅ test_search_api.py
+Integration tests for the FastAPI endpoints:
+- /health returns {"ok": true} and HTTP 200
+- /search endpoint returns a valid JSON list of results with required fields
+- Structure of API response is validated without relying on fixed data
+
+✅ test_search_sql.py
+Direct SQL-level test for the full-text search function:
+- Checks that search_contacts() returns a list
+- Verifies that at least one contact matches a given domain (e.g. nimble.com)
+- Works even when the database is empty (graceful pass)
