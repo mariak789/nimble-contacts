@@ -1,6 +1,6 @@
 import os
 from contextlib import contextmanager
-from psycopg import connect
+import psycopg2
 
 def dsn() -> str:
     return (
@@ -13,5 +13,5 @@ def dsn() -> str:
 
 @contextmanager
 def get_conn():
-    with connect(dsn()) as conn:
+    with psycopg2.connect(dsn()) as conn:
         yield conn
