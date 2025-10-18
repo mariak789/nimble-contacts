@@ -3,7 +3,7 @@ from app.db import get_conn
 
 @pytest.fixture(autouse=True)
 def _clean_contacts():
-    """Перед кожним тестом чистимо таблицю та наповнюємо фікстурами."""
+    """Clean database and fill with fixtures before every test."""
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute("""
         CREATE TABLE IF NOT EXISTS contacts(

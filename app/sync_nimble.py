@@ -23,7 +23,6 @@ SET first_name = COALESCE(EXCLUDED.first_name, contacts.first_name),
 """
 
 def _first_value(seq):
-    """Nimble повертає поля як масиви словників; беремо перше значення."""
     if isinstance(seq, list) and seq:
         item = seq[0]
         return item.get("value") if isinstance(item, dict) else item
