@@ -18,14 +18,12 @@ A FastAPI microservice for importing, syncing, and searching contacts stored in 
 # Let's start
 
 ### Environment Setup 
-1. Create a .env file:
+1. Copy the example environment file:
+```bash
+cp .env.example .env
+```
 
-- POSTGRES_DB=contacts
-- POSTGRES_USER=postgres
-- POSTGRES_PASSWORD=postgres
-- POSTGRES_HOST=db
-- POSTGRES_PORT=5432
-- NIMBLE_TOKEN=your_api_token_here
+Then open .env and fill in the required values if needed.
 
 2. Build and start containers:
 ```bash
